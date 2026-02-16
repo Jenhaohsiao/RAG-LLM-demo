@@ -1,10 +1,18 @@
+export interface LocalizedContent {
+  en: string;
+  'zh-TW': string;
+  'zh-CN': string;
+}
+
 export interface Book {
   id: string;
-  title: string;
-  author: string;
+  title: LocalizedContent;
+  author: LocalizedContent;
   coverColor: string;
-  summary: string; // The short description shown in UI
-  context: string; // The "vector db" content used for RAG
+  coverImage: string; // Path to book cover image
+  summary: LocalizedContent; // The short description shown in UI
+  context: LocalizedContent; // The "vector db" content used for RAG
+  collectionName: string; // Qdrant collection name for this book
 }
 
 export interface Message {

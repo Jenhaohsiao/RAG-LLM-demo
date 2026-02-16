@@ -1,5 +1,0 @@
-{
-  "name": "RAG Storyteller",
-  "description": "A production-grade RAG application enabling users to interact with specific book contexts via an AI assistant with a dynamic split-screen UI.",
-  "requestFramePermissions": []
-}

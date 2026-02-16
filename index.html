@@ -6,7 +6,7 @@
     <meta name="description" content="Production-grade RAG Architecture - Vector DB + LLM powered storytelling assistant" />
     <title>RAG Storyteller | AI-Powered Interactive Books</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -15,39 +15,19 @@
       
       /* Custom scrollbar for content areas */
       .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       .custom-scrollbar::-webkit-scrollbar-track {
         background: #f1f5f9;
         border-radius: 10px;
       }
       .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #cbd5e1, #94a3b8);
+        background: #cbd5e1;
         border-radius: 10px;
-        border: 2px solid #f1f5f9;
       }
       .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, #94a3b8, #64748b);
-      }
-      
-      /* 3D perspective utilities */
-      .perspective-1000 {
-        perspective: 1000px;
-      }
-      
-      /* Book tilt animation */
-      @keyframes bookTilt {
-        0%, 100% { transform: rotateY(-2deg); }
-        50% { transform: rotateY(-1deg); }
-      }
-      
-      .rotate-y-\[-2deg\] {
-        transform: rotateY(-2deg);
-      }
-      
-      .rotate-y-\[-1deg\] {
-        transform: rotateY(-1deg);
+        background: #94a3b8;
       }
       
       /* Smooth animations */
@@ -70,7 +50,7 @@
       @keyframes zoomIn {
         from { 
           opacity: 0; 
-          transform: scale(0.8); 
+          transform: scale(0.9); 
         }
         to { 
           opacity: 1; 
@@ -83,45 +63,15 @@
       }
       
       .fade-in {
-        animation: fadeIn 0.5s ease-out;
+        animation: fadeIn 0.3s ease-out;
       }
       
       .slide-in-from-bottom-4 {
-        animation: slideInFromBottom 0.5s ease-out;
+        animation: slideInFromBottom 0.3s ease-out;
       }
       
       .zoom-in {
-        animation: zoomIn 0.3s ease-out;
-      }
-      
-      /* Loading animation improvements */
-      @keyframes bounce {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-      }
-      
-      .animate-bounce {
-        animation: bounce 1s infinite;
-      }
-      
-      /* Gradient text */
-      .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      
-      /* Glass morphism effect */
-      .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: zoomIn 0.2s ease-out;
       }
       
       /* SVG fill colors matching Tailwind */
@@ -144,6 +94,6 @@
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
