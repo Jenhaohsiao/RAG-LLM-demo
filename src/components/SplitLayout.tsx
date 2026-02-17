@@ -9,12 +9,25 @@ const SplitLayout: React.FC<SplitLayoutProps> = ({
   leftContent,
   rightContent,
 }) => {
-  const [leftWidth, setLeftWidth] = useState(50); // 50% default
+  const [leftWidth, setLeftWidth] = useState(38); // 38% default for better balance
   const [isDragging, setIsDragging] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Check if mobile view (< 768px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const handleMouseDown = () => {
-    setIsDragging(true);
+    if (!isMobile) {
+      setIsDragging(true);
+    }
   };
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -56,40 +69,50 @@ const SplitLayout: React.FC<SplitLayoutProps> = ({
   }, [isDragging]);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 p-2 sm:p-4 md:p-8">
+    <div className="w-full h-screen min-w-[320px] min-h-[480px] flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
       <div
         ref={containerRef}
-        className="w-full max-w-[1200px] h-full flex overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl shadow-xl bg-white"
+        className={`w-full h-full flex overflow-hidden bg-white ${isMobile ? "flex-col" : "flex-row"}`}
       >
         {/* LEFT PANEL */}
         <div
-          style={{ width: `${leftWidth}%` }}
-          className="h-full relative overflow-hidden bg-slate-50 border-r border-slate-200"
+          style={
+            isMobile
+              ? { height: "45%" }
+              : { width: `${leftWidth}%`, minWidth: "280px" }
+          }
+          className={`relative overflow-hidden bg-slate-50 ${isMobile ? "border-b" : "border-r"} border-slate-200`}
         >
           <div className="w-full h-full">{leftContent}</div>
         </div>
 
-        {/* RESIZABLE DIVIDER */}
-        <div
-          onMouseDown={handleMouseDown}
-          className={`w-1 bg-slate-300 hover:bg-indigo-500 transition-colors cursor-col-resize relative group ${
-            isDragging ? "bg-indigo-500" : ""
-          }`}
-        >
-          <div className="absolute inset-y-0 -left-1 -right-1" />
-          {/* Drag indicator */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="flex gap-0.5">
-              <div className="w-0.5 h-8 bg-white rounded-full" />
-              <div className="w-0.5 h-8 bg-white rounded-full" />
+        {/* RESIZABLE DIVIDER - Only show on desktop */}
+        {!isMobile && (
+          <div
+            onMouseDown={handleMouseDown}
+            className={`w-1 bg-slate-300 hover:bg-indigo-500 transition-colors cursor-col-resize relative group ${
+              isDragging ? "bg-indigo-500" : ""
+            }`}
+          >
+            <div className="absolute inset-y-0 -left-1 -right-1" />
+            {/* Drag indicator */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex gap-0.5">
+                <div className="w-0.5 h-8 bg-white rounded-full" />
+                <div className="w-0.5 h-8 bg-white rounded-full" />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* RIGHT PANEL */}
         <div
-          style={{ width: `${100 - leftWidth}%` }}
-          className="h-full relative overflow-hidden bg-white"
+          style={
+            isMobile
+              ? { height: "55%" }
+              : { width: `${100 - leftWidth}%`, minWidth: "320px" }
+          }
+          className="relative overflow-hidden bg-white flex-1"
         >
           <div className="w-full h-full">{rightContent}</div>
         </div>

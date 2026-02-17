@@ -40,13 +40,10 @@ export const generateEmbedding = async (
         const retryMatch = error.message.match(/retry in ([\d.]+)s/i);
         const retryDelay = retryMatch ? parseFloat(retryMatch[1]) * 1000 : 5000;
         
-        console.log(`⏳ 速率限制，等待 ${(retryDelay/1000).toFixed(1)} 秒後重試... (嘗試 ${attempt + 1}/${retries})`);
         await new Promise(resolve => setTimeout(resolve, retryDelay));
         continue;
       }
       
-      console.error("生成 embedding 時出錯:", error);
-      console.error("錯誤詳情:", error.message);
       throw new Error(`無法生成文本向量: ${error.message}`);
     }
   }

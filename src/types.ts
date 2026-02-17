@@ -14,18 +14,24 @@ export interface Book {
   collectionName: string; // Qdrant collection name for this book
 }
 
+// Suggested question (AI generates answer when clicked)
+export interface SuggestedQuestion {
+  question: string;
+}
+
 export interface Message {
   id: string;
   role: 'user' | 'model';
   text: string;
   timestamp: Date;
+  suggestedQuestions?: SuggestedQuestion[]; // Only for model messages
 }
 
 export enum AIPersona {
-  LIBRARIAN = 'Librarian',
-  CRITIC = 'Critic',
-  FAN = 'Super Fan',
-  AUTHOR = 'The Author',
+  HOST = 'Host',
+  TEACHER = 'Teacher',
+  FAN = 'Fan',
+  KNIGHT = 'Knight',
 }
 
 export enum AITone {

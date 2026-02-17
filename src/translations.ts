@@ -10,6 +10,7 @@ export interface Translations {
   knowledgeBase: string;
   selectSourceAndConfig: string;
   availableSources: string;
+  selectBook: string;
   synopsis: string;
   aiConfiguration: string;
   role: string;
@@ -19,10 +20,10 @@ export interface Translations {
   connectionError: string;
   
   // AI Personas  
-  librarian: string;
-  critic: string;
-  superFan: string;
-  theAuthor: string;
+  host: string;
+  teacher: string;
+  fan: string;
+  knight: string;
   
   // AI Tones
   formal: string;
@@ -39,6 +40,7 @@ export interface Translations {
   typeMessage: string;
   sendMessage: string;
   aiDisclaimer: string;
+  suggestedQuestions: string;
   
   // Confirm Dialog
   switchKnowledgeBase: string;
@@ -50,6 +52,11 @@ export interface Translations {
   // Error Messages
   somethingWrong: string;
   reloadApplication: string;
+  
+  // About Dialog
+  aboutProject: string;
+  whatIsRag: string;
+  ragApplications: string;
 }
 
 const en: Translations = {
@@ -59,6 +66,7 @@ const en: Translations = {
   knowledgeBase: 'Knowledge Base',
   selectSourceAndConfig: 'Select a source and configure AI',
   availableSources: 'Available Sources',
+  selectBook: 'Select a Book',
   synopsis: 'Synopsis',
   aiConfiguration: 'AI Configuration',
   role: 'Role',
@@ -66,10 +74,10 @@ const en: Translations = {
   vectorDbConnected: 'Vector DB Connected',
   vectorDbChecking: 'Checking...',
   connectionError: 'Connection Error',
-  librarian: 'Librarian',
-  critic: 'Critic',
-  superFan: 'Super Fan',
-  theAuthor: 'The Author',
+  host: 'Show Host',
+  teacher: 'Elementary Teacher',
+  fan: 'Fan',
+  knight: 'Medieval Knight',
   formal: 'Formal',
   casual: 'Casual',
   humorous: 'Humorous',
@@ -82,6 +90,7 @@ const en: Translations = {
   typeMessage: 'Ask about the story... (Shift+Enter for new line)',
   sendMessage: 'Send message (Enter)',
   aiDisclaimer: 'AI responses powered by Gemini. May contain inaccuracies.',
+  suggestedQuestions: 'You might also want to ask:',
   switchKnowledgeBase: 'Switch Knowledge Base?',
   switchWarning: 'Switching to "{title}" will clear your current conversation. Do you want to continue?',
   switch: 'Switch',
@@ -89,6 +98,9 @@ const en: Translations = {
   confirm: 'Confirm',
   somethingWrong: 'Something went wrong',
   reloadApplication: 'Reload Application',
+  aboutProject: 'About This Project',
+  whatIsRag: 'What is RAG?',
+  ragApplications: 'RAG Applications',
 };
 
 const zhTW: Translations = {
@@ -98,6 +110,7 @@ const zhTW: Translations = {
   knowledgeBase: '知識庫',
   selectSourceAndConfig: '選擇來源並配置 AI',
   availableSources: '可用來源',
+  selectBook: '選擇書籍',
   synopsis: '簡介',
   aiConfiguration: 'AI 配置',
   role: '角色',
@@ -105,10 +118,10 @@ const zhTW: Translations = {
   vectorDbConnected: '向量資料庫已連接',
   vectorDbChecking: '檢查中...',
   connectionError: '連接錯誤',
-  librarian: '圖書管理員',
-  critic: '文學評論家',
-  superFan: '超級粉絲',
-  theAuthor: '原作者',
+  host: '節目主持人',
+  teacher: '國小老師',
+  fan: '粉絲',
+  knight: '中古騎士',
   formal: '正式',
   casual: '輕鬆',
   humorous: '幽默',
@@ -121,6 +134,7 @@ const zhTW: Translations = {
   typeMessage: '詢問故事相關問題... (Shift+Enter 換行)',
   sendMessage: '發送訊息 (Enter)',
   aiDisclaimer: 'AI 回應由 Gemini 提供支援。可能包含不準確資訊。',
+  suggestedQuestions: '您可能還想問：',
   switchKnowledgeBase: '切換知識庫？',
   switchWarning: '切換到「{title}」將清空目前的對話。是否繼續？',
   switch: '切換',
@@ -128,6 +142,9 @@ const zhTW: Translations = {
   confirm: '確認',
   somethingWrong: '發生錯誤',
   reloadApplication: '重新載入應用程式',
+  aboutProject: '關於本專案',
+  whatIsRag: '什麼是 RAG？',
+  ragApplications: 'RAG 應用場景',
 };
 
 export const translations: Record<Language, Translations> = {

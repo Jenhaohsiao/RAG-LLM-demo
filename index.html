@@ -8,9 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-      body {
+      html, body {
         font-family: 'Inter', sans-serif;
         overflow: hidden;
+        min-width: 320px;
+        min-height: 480px;
       }
       
       /* Custom scrollbar for content areas */
@@ -71,6 +73,10 @@
       }
       
       .zoom-in {
+        animation: zoomIn 0.2s ease-out;
+      }
+      
+      .animate-zoomIn {
         animation: zoomIn 0.2s ease-out;
       }
       

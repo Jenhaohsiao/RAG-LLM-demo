@@ -36,7 +36,6 @@ export const getQdrantClient = (): QdrantClient => {
   if (!qdrantClient) {
     const config = getQdrantConfig();
     qdrantClient = new QdrantClient(config);
-    console.log('✅ Qdrant 客戶端已初始化 (Node.js)');
   }
   
   return qdrantClient;
@@ -60,7 +59,6 @@ export const checkCollectionExists = async (): Promise<boolean> => {
       return collections.collections.some(col => col.name === COLLECTION_NAME);
     }
   } catch (error) {
-    console.error('檢查集合時出錯:', error);
     return false;
   }
 };
@@ -74,7 +72,6 @@ export const createCollection = async (): Promise<void> => {
     const exists = await checkCollectionExists();
     
     if (exists) {
-      console.log(`✅ 集合 "${COLLECTION_NAME}" 已存在`);
       return;
     }
     
@@ -84,10 +81,7 @@ export const createCollection = async (): Promise<void> => {
         distance: 'Cosine', // 使用餘弦相似度
       },
     });
-    
-    console.log(`✅ 成功創建集合 "${COLLECTION_NAME}"`);
   } catch (error) {
-    console.error('創建集合時出錯:', error);
     throw new Error('無法創建 Qdrant 集合');
   }
 };
@@ -120,10 +114,7 @@ export const insertVectors = async (points: VectorPoint[]): Promise<void> => {
         payload: point.payload,
       })),
     });
-    
-    console.log(`✅ 成功插入 ${points.length} 個向量點`);
   } catch (error) {
-    console.error('插入向量時出錯:', error);
     throw new Error('無法插入向量到 Qdrant');
   }
 };
@@ -153,8 +144,6 @@ const searchWithFetch = async (
   language: Language,
   limit: number = 5
 ): Promise<SearchResult[]> => {
-  console.log('🌐 使用瀏覽器 fetch API 搜索 Qdrant');
-  
   const searchUrl = `${BROWSER_API_BASE}/collections/${COLLECTION_NAME}/points/search`;
   
   const requestBody = {
@@ -168,9 +157,7 @@ const searchWithFetch = async (
     },
     with_payload: true
   };
-  
-  console.log('📤 搜索請求:', { url: searchUrl, bookId, language, limit, vectorLength: queryVector.length });
-  
+
   const response = await fetch(searchUrl, {
     method: 'POST',
     headers: {
@@ -181,12 +168,10 @@ const searchWithFetch = async (
   
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('❌ Qdrant 搜索失敗:', response.status, errorText);
     throw new Error(`Qdrant 搜索失敗: ${response.status} ${errorText}`);
   }
   
   const data = await response.json();
-  console.log('📥 搜索結果:', { count: data.result?.length || 0 });
   
   return (data.result || []).map((result: any) => ({
     id: result.id,
@@ -204,8 +189,6 @@ const searchWithClient = async (
   language: Language,
   limit: number = 5
 ): Promise<SearchResult[]> => {
-  console.log('🖥️ 使用 QdrantClient 搜索 (Node.js)');
-  
   const client = getQdrantClient();
   
   const searchResult = await client.search(COLLECTION_NAME, {
@@ -240,7 +223,6 @@ export const searchSimilarVectors = async (
       return await searchWithClient(queryVector, bookId, language, limit);
     }
   } catch (error) {
-    console.error('搜索向量時出錯:', error);
     throw new Error('無法從 Qdrant 搜索向量');
   }
 };
@@ -288,7 +270,6 @@ export const checkBookLanguageExists = async (
       return result.points.length > 0;
     }
   } catch (error) {
-    console.error('檢查書籍語言版本時出錯:', error);
     return false;
   }
 };
@@ -311,10 +292,7 @@ export const deleteBookVectors = async (bookId: string): Promise<void> => {
         ]
       },
     });
-    
-    console.log(`✅ 成功刪除書籍 ${bookId} 的所有向量`);
   } catch (error) {
-    console.error('刪除向量時出錯:', error);
     throw new Error('無法刪除向量');
   }
 };
@@ -345,7 +323,6 @@ export const getCollectionStats = async () => {
       };
     }
   } catch (error) {
-    console.error('獲取集合統計時出錯:', error);
     return null;
   }
 };

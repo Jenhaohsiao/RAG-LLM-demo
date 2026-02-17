@@ -1,7 +1,8 @@
 # 📊 RAG Storyteller - 專案狀態
 
+> **版本**: 1.0  
 > **最後更新**: 2026-02-16  
-> **專案狀態**: ✅ **Production Ready**  
+> **專案狀態**: ✅ **Version 1.0 Complete**  
 > **語言支援**: 英文 (en) + 繁體中文 (zh-TW)
 
 ---
@@ -14,8 +15,12 @@
 - 🤖 **真實 RAG 架構**: Qdrant Vector DB + Gemini LLM
 - 🌍 **雙語言支援**: 英文、繁體中文 UI
 - 🔄 **智能查詢翻譯**: 自動將非英文查詢翻譯成英文進行搜索
-- 🎨 **現代化 UI**: 響應式設計、50-50 分屏佈局
+- 🎨 **現代化 UI**: 響應式設計、50-50 分屏佈局、鮮明書籍色彩
 - 📚 **智能對話**: 基於書籍內容的 AI 助手（約 80 字簡潔回答）
+- 🎭 **AI 角色**: 主持人、國小老師、粉絲、中古騎士
+- 💡 **智能建議**: 對話後自動生成相關問題
+- 🔒 **使用限制**: 每 session 10 次對話，8 小時後重置
+- ℹ️ **關於專案**: RAG 技術說明對話框
 
 ### 技術堆疊
 | 類別 | 技術 |
@@ -52,22 +57,29 @@ RAG-LLM-demo/
 ├── src/
 │   ├── App.tsx                 # 主應用
 │   ├── main.tsx                # 入口點
-│   ├── constants.ts            # 書籍定義 (3本)
+│   ├── constants.ts            # 書籍定義 (3本) + 初始問題
 │   ├── translations.ts         # 翻譯文字 (en, zh-TW)
 │   ├── types.ts                # TypeScript 類型
 │   ├── LanguageContext.tsx     # 語言 Context
 │   ├── components/
-│   │   ├── BookSelector.tsx    # 書籍選擇器
-│   │   ├── ChatInterface.tsx   # 聊天介面
-│   │   ├── SplitLayout.tsx     # 分屏佈局
+│   │   ├── BookSelector.tsx    # 書籍選擇器 + AI 設定
+│   │   ├── ChatInterface.tsx   # 聊天介面 + RAG 說明
+│   │   ├── SplitLayout.tsx     # 響應式分屏佈局
 │   │   ├── LanguageSwitcher.tsx
 │   │   ├── ConfirmDialog.tsx
+│   │   ├── AboutDialog.tsx     # RAG 技術說明對話框
+│   │   ├── UsageLimitDialog.tsx # 使用限制提示
 │   │   └── ErrorBoundary.tsx
-│   └── services/
-│       ├── geminiService.ts    # Gemini LLM + 查詢翻譯
-│       ├── qdrantService.ts    # Qdrant 向量 DB
-│       └── embeddingService.ts # Embedding 生成
+│   ├── services/
+│   │   ├── geminiService.ts    # Gemini LLM + 查詢翻譯 + 建議問題
+│   │   ├── qdrantService.ts    # Qdrant 向量 DB
+│   │   ├── embeddingService.ts # Embedding 生成
+│   │   └── usageTracker.ts     # 使用次數追蹤
+│   └── images/
+│       ├── appBG.png           # 背景圖
+│       └── whatIsRag.png       # RAG 說明圖
 ├── Books/                      # 書籍文字檔案
+│   └── bookCovers/             # 書籍封面圖
 ├── upload-single.ts            # 單本上傳腳本
 ├── PROJECT_STATUS.md           # 本文件
 ├── README.md                   # 英文說明
@@ -122,14 +134,29 @@ npx tsx upload-single.ts <BOOK_ID> <LANGUAGE>
 
 ## 📅 變更歷史
 
-### 2026-02-16
+### Version 1.0 (2026-02-16) ✅ 完成
+**UI/UX 改進**
+- ✅ 書籍橫向排列，鮮明漸層色彩 (紫、玫紅、琥珀)
+- ✅ 未選中書籍顯示灰階效果
+- ✅ 響應式設計 (min-width: 320px, min-height: 480px)
+- ✅ 左側面板背景圖 (appBG.png)
+- ✅ 聊天介面顯示 RAG 說明文字
+
+**AI 功能**
+- ✅ AI 角色系統: 主持人、國小老師、粉絲、中古騎士
+- ✅ 初始建議問題 (每本書 2 題)
+- ✅ 對話後智能生成相關問題
+- ✅ 查詢翻譯功能 (非英文自動翻譯)
+- ✅ AI 回答限制約 80 字
+
+**新增對話框**
+- ✅ AboutDialog: RAG 技術說明 + whatIsRag.png 圖片
+- ✅ UsageLimitDialog: 使用限制提示 (10次/8小時)
+- ✅ 對話框內建語言選單 (獨立於全域語言)
+
+**資料清理**
 - ✅ 書籍縮減為 3 本 (移除 Standard Oil History, Wizard of Oz)
 - ✅ 移除簡體中文 (zh-CN) 支援
-- ✅ 新增查詢翻譯功能 (translateQueryToEnglish)
-- ✅ AI 回答限制約 80 字
-- ✅ 中文回答加上翻譯提示
-- ✅ UI 文字尺寸放大一級
-- ✅ 修復前端 Qdrant 連接問題 (使用 fetch API)
 - ✅ 清理冗餘檔案和測試腳本
 
 ---

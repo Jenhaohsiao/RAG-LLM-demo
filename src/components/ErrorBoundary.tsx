@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { translations, Language } from '../translations';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { translations, Language } from "../translations";
 
 interface Props {
   children: ReactNode;
@@ -21,7 +21,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+    // Error already captured in state via getDerivedStateFromError
   }
 
   private handleReset = () => {
@@ -32,17 +32,20 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       // 獲取語言（錯誤時預設英文）
-      let language: Language = 'en';
+      let language: Language = "en";
       try {
-        const stored = localStorage.getItem('rag-app-language');
-        if (stored && (stored === 'en' || stored === 'zh-TW' || stored === 'zh-CN')) {
+        const stored = localStorage.getItem("rag-app-language");
+        if (
+          stored &&
+          (stored === "en" || stored === "zh-TW" || stored === "zh-CN")
+        ) {
           language = stored as Language;
         }
       } catch {
         // 如果 localStorage 失敗，使用預設英文
       }
       const t = translations[language];
-      
+
       return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
           <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
@@ -65,7 +68,7 @@ class ErrorBoundary extends Component<Props, State> {
               {t.somethingWrong}
             </h2>
             <p className="text-slate-600 text-sm mb-6">
-              {this.state.error?.message || 'An unexpected error occurred'}
+              {this.state.error?.message || "An unexpected error occurred"}
             </p>
             <button
               onClick={this.handleReset}

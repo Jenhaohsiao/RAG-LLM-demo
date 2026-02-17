@@ -23,7 +23,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
         return stored as Language;
       }
     } catch (error) {
-      console.error("Failed to load language from localStorage:", error);
+      // Silently fail and use default language
     }
     return "en";
   });
@@ -33,7 +33,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
     try {
       localStorage.setItem(STORAGE_KEY, lang);
     } catch (error) {
-      console.error("Failed to save language to localStorage:", error);
+      // Silently fail
     }
   };
 
