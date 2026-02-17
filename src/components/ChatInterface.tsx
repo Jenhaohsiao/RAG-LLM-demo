@@ -92,13 +92,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             </svg>
           </div>
           <div className="min-w-0 flex-1">
-            <h2 className="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-1.5 sm:gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-1.5 sm:gap-2">
               <span className="truncate">{t.aiAssistant}</span>
-              <span className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 bg-indigo-100 text-indigo-600 rounded-full font-semibold flex-shrink-0">
+              <span className="text-xs sm:text-sm px-1.5 sm:px-2 py-0.5 bg-indigo-100 text-indigo-600 rounded-full font-semibold flex-shrink-0">
                 {t.ragBadge}
               </span>
             </h2>
-            <p className="text-[10px] sm:text-xs text-slate-500 truncate">
+            <p className="text-xs sm:text-sm text-slate-500 truncate">
               {selectedBook.title[language]}
             </p>
           </div>
@@ -106,7 +106,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
         {/* Actions */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-          <span className="text-[10px] sm:text-xs text-slate-500 hidden sm:inline">
+          <span className="text-xs sm:text-sm text-slate-500 hidden sm:inline">
             {messages.length} {t.messages}
           </span>
           {messages.length > 0 && (
@@ -152,10 +152,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 />
               </svg>
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-700 mb-1.5 sm:mb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-700 mb-1.5 sm:mb-2">
               {t.startConversation}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-md">
+            <p className="text-sm sm:text-base text-slate-500 max-w-md">
               {t.askQuestions}{" "}
               <span className="font-semibold text-indigo-600 break-words">
                 "
@@ -213,7 +213,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               {/* Message bubble */}
               <div
                 className={`
-                  rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm leading-relaxed
+                  rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base leading-relaxed
                   ${
                     msg.role === "user"
                       ? "bg-indigo-600 text-white"
@@ -223,7 +223,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               >
                 <p className="whitespace-pre-wrap break-words">{msg.text}</p>
                 <div
-                  className={`text-[10px] sm:text-xs mt-1.5 sm:mt-2 ${msg.role === "user" ? "text-indigo-200" : "text-slate-400"}`}
+                  className={`text-xs sm:text-sm mt-1.5 sm:mt-2 ${msg.role === "user" ? "text-indigo-200" : "text-slate-400"}`}
                 >
                   {msg.timestamp.toLocaleTimeString([], {
                     hour: "2-digit",
@@ -257,7 +257,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                   className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-400 rounded-full animate-bounce"
                   style={{ animationDelay: "0.2s" }}
                 ></div>
-                <span className="text-[10px] sm:text-xs text-slate-400 ml-0.5 sm:ml-1">
+                <span className="text-xs sm:text-sm text-slate-400 ml-0.5 sm:ml-1">
                   {t.thinking}
                 </span>
               </div>
@@ -275,7 +275,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         >
           <textarea
             ref={textareaRef}
-            className="flex-1 bg-slate-50 border border-slate-300 text-slate-800 px-3 sm:px-4 py-2 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-xs sm:text-sm resize-none max-h-32"
+            className="flex-1 bg-slate-50 border border-slate-300 text-slate-800 px-3 sm:px-4 py-2 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base resize-none max-h-32"
             placeholder={t.typeMessage}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
@@ -304,7 +304,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             </svg>
           </button>
         </form>
-        <p className="text-[10px] sm:text-xs text-slate-400 mt-1.5 sm:mt-2 text-center">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1.5 sm:mt-2 text-center">
           {t.aiDisclaimer}
         </p>
       </div>

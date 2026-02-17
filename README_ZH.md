@@ -39,7 +39,9 @@
 - **前端框架**: React 19 + TypeScript
 - **構建工具**: Vite
 - **樣式**: TailwindCSS + 自定義 CSS 動畫
-- **LLM**: Google Gemini API
+- **向量資料庫**: Qdrant Cloud (3072 維)
+- **Embedding**: gemini-embedding-001
+- **LLM**: gemini-2.5-flash
 - **部署**: 靜態網站託管（Vercel, Netlify, Azure Static Web Apps）
 
 ## 📦 安裝與運行
@@ -179,17 +181,23 @@ pip install sentence-transformers
 
 ```
 RAG-LLM-demo/
-├── components/
-│   ├── BookSelector.tsx      # 左側書籍選擇器
-│   ├── ChatInterface.tsx     # 右側聊天介面
-│   └── SplitLayout.tsx       # 分屏佈局管理
-├── services/
-│   └── geminiService.ts      # Gemini API 整合
-├── constants.ts              # 書籍資料和配置
-├── types.ts                  # TypeScript 類型定義
-├── App.tsx                   # 主應用程式組件
-├── index.html                # HTML 入口
-└── vite.config.ts            # Vite 配置
+├── src/
+│   ├── components/
+│   │   ├── BookSelector.tsx      # 左側書籍選擇器
+│   │   ├── ChatInterface.tsx     # 右側聊天介面
+│   │   ├── SplitLayout.tsx       # 分屏佈局管理
+│   │   └── LanguageSwitcher.tsx  # 語言切換器
+│   ├── services/
+│   │   ├── geminiService.ts      # Gemini LLM 服務
+│   │   ├── qdrantService.ts      # Qdrant 向量 DB
+│   │   └── embeddingService.ts   # Embedding 生成
+│   ├── constants.ts              # 書籍資料和配置
+│   ├── types.ts                  # TypeScript 類型定義
+│   ├── translations.ts           # 翻譯文字
+│   └── App.tsx                   # 主應用程式組件
+├── Books/                        # 書籍文字檔案
+├── upload-single.ts              # 單本上傳腳本
+└── vite.config.ts                # Vite 配置
 ```
 
 ## 🎯 功能演示

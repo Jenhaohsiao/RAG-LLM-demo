@@ -54,10 +54,10 @@ const BookSelector: React.FC<BookSelectorProps> = ({
       {/* Header */}
       <div className="p-3 sm:p-4 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
         <div>
-          <h2 className="text-base sm:text-lg font-bold text-slate-800">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-800">
             {t.knowledgeBase}
           </h2>
-          <p className="text-slate-500 text-xs mt-0.5 hidden sm:block">
+          <p className="text-slate-500 text-sm mt-0.5 hidden sm:block">
             {t.selectSourceAndConfig}
           </p>
         </div>
@@ -68,11 +68,11 @@ const BookSelector: React.FC<BookSelectorProps> = ({
       <div className="flex-1 overflow-hidden p-3 sm:p-4 flex flex-col gap-3 sm:gap-4">
         {/* Books Grid - Horizontal Layout */}
         <section>
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">
             {t.availableSources}
           </h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {BOOKS.map((book) => (
               <button
                 key={book.id}
@@ -90,10 +90,10 @@ const BookSelector: React.FC<BookSelectorProps> = ({
                   className={`w-full h-1 sm:h-1.5 rounded-full ${book.coverColor} mb-1.5 sm:mb-2`}
                 />
                 <div className="flex-1 flex flex-col items-center justify-center text-center min-h-[50px] sm:min-h-[60px]">
-                  <h4 className="font-semibold text-slate-800 text-[10px] sm:text-xs leading-tight mb-1 line-clamp-2">
+                  <h4 className="font-semibold text-slate-800 text-xs sm:text-sm leading-tight mb-1 line-clamp-2">
                     {book.title[language]}
                   </h4>
-                  <p className="text-[9px] sm:text-[10px] text-slate-500 line-clamp-1">
+                  <p className="text-[10px] sm:text-xs text-slate-500 line-clamp-1">
                     {book.author[language]}
                   </p>
                 </div>
@@ -135,11 +135,11 @@ const BookSelector: React.FC<BookSelectorProps> = ({
             </div>
 
             {/* Synopsis */}
-            <h3 className="text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5 sm:mb-2">
+            <h3 className="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1.5 sm:mb-2">
               {t.synopsis}
             </h3>
             <div className="flex-1 overflow-y-auto custom-scrollbar">
-              <p className="text-slate-600 text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                 {selectedBook.summary[language]}
               </p>
             </div>
@@ -147,20 +147,20 @@ const BookSelector: React.FC<BookSelectorProps> = ({
 
           {/* AI Configuration */}
           <section className="flex flex-col">
-            <h3 className="text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5 sm:mb-2">
+            <h3 className="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1.5 sm:mb-2">
               {t.aiConfiguration}
             </h3>
 
             <div className="space-y-2 sm:space-y-3">
               {/* Persona Selector */}
               <div>
-                <label className="text-[10px] sm:text-xs font-medium text-slate-700 mb-1 sm:mb-1.5 block">
+                <label className="text-xs sm:text-sm font-medium text-slate-700 mb-1 sm:mb-1.5 block">
                   {t.role}
                 </label>
                 <select
                   value={selectedPersona}
                   onChange={(e) => onSelectPersona(e.target.value as AIPersona)}
-                  className="w-full bg-white border border-slate-300 text-slate-700 py-1.5 sm:py-2 px-2 sm:px-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-[10px] sm:text-xs"
+                  className="w-full bg-white border border-slate-300 text-slate-700 py-1.5 sm:py-2 px-2 sm:px-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-xs sm:text-sm"
                 >
                   <option value={AIPersona.LIBRARIAN}>{t.librarian}</option>
                   <option value={AIPersona.CRITIC}>{t.critic}</option>
@@ -171,13 +171,13 @@ const BookSelector: React.FC<BookSelectorProps> = ({
 
               {/* Tone Selector */}
               <div>
-                <label className="text-[10px] sm:text-xs font-medium text-slate-700 mb-1 sm:mb-1.5 block">
+                <label className="text-xs sm:text-sm font-medium text-slate-700 mb-1 sm:mb-1.5 block">
                   {t.tone}
                 </label>
                 <select
                   value={selectedTone}
                   onChange={(e) => onSelectTone(e.target.value as AITone)}
-                  className="w-full bg-white border border-slate-300 text-slate-700 py-1.5 sm:py-2 px-2 sm:px-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-[10px] sm:text-xs"
+                  className="w-full bg-white border border-slate-300 text-slate-700 py-1.5 sm:py-2 px-2 sm:px-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-xs sm:text-sm"
                 >
                   <option value={AITone.FORMAL}>{t.formal}</option>
                   <option value={AITone.CASUAL}>{t.casual}</option>
@@ -192,7 +192,7 @@ const BookSelector: React.FC<BookSelectorProps> = ({
 
       {/* Footer with Real Status - Compact */}
       <div className="px-3 sm:px-4 py-1.5 sm:py-2 border-t border-slate-200 bg-slate-50">
-        <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px]">
+        <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
           <div
             className={`w-1.5 h-1.5 rounded-full ${
               qdrantStatus === "connected"

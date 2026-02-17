@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // 初始化 Gemini 客戶端用於 Embedding
 const getEmbeddingClient = () => {
@@ -9,36 +9,54 @@ const getEmbeddingClient = () => {
     throw new Error("Gemini API Key 未配置");
   }
   
-  return new GoogleGenAI({ apiKey });
+  return new GoogleGenerativeAI(apiKey);
 };
 
 /**
  * 使用 Gemini Embedding API 生成文本的向量表示
- * 模型: text-embedding-004 (768 維度)
+ * 模型: gemini-embedding-001 (3072 維度)
+ * 帶有重試邏輯以處理速率限制
  */
-export const generateEmbedding = async (text: string): Promise<number[]> => {
-  try {
-    const ai = getEmbeddingClient();
-    
-    // 使用 Gemini 的 embedding 方法
-    const result = await ai.models.embedContent({
-      model: "text-embedding-004",
-      contents: text
-    });
-    
-    if (!result.embeddings?.[0]?.values) {
-      throw new Error("無法生成 embedding");
+export const generateEmbedding = async (
+  text: string, 
+  retries: number = 3
+): Promise<number[]> => {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const genAI = getEmbeddingClient();
+      const model = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
+      
+      const result = await model.embedContent(text);
+      
+      if (!result.embedding?.values) {
+        throw new Error("無法生成 embedding");
+      }
+      
+      return result.embedding.values;
+    } catch (error: any) {
+      // 如果是速率限制錯誤 (429) 且還有重試次數
+      if (error.status === 429 && attempt < retries) {
+        // 從錯誤消息中提取建議的重試延遲時間（秒）
+        const retryMatch = error.message.match(/retry in ([\d.]+)s/i);
+        const retryDelay = retryMatch ? parseFloat(retryMatch[1]) * 1000 : 5000;
+        
+        console.log(`⏳ 速率限制，等待 ${(retryDelay/1000).toFixed(1)} 秒後重試... (嘗試 ${attempt + 1}/${retries})`);
+        await new Promise(resolve => setTimeout(resolve, retryDelay));
+        continue;
+      }
+      
+      console.error("生成 embedding 時出錯:", error);
+      console.error("錯誤詳情:", error.message);
+      throw new Error(`無法生成文本向量: ${error.message}`);
     }
-    
-    return result.embeddings[0].values;
-  } catch (error) {
-    console.error("生成 embedding 時出錯:", error);
-    throw new Error("無法生成文本向量");
   }
+  
+  throw new Error("重試次數已用盡");
 };
 
 /**
  * 批量生成 embeddings
+ * 免費版限制: 每分鐘 100 次請求，添加 700ms 延遲確保不超限
  */
 export const generateBatchEmbeddings = async (
   texts: string[],
@@ -54,9 +72,10 @@ export const generateBatchEmbeddings = async (
       onProgress(i + 1, texts.length);
     }
     
-    // 避免 API 速率限制，添加小延遲
+    // 避免 API 速率限制 (免費版: 100次/分鐘 = 1次/0.6秒)
+    // 使用 700ms 延遲確保安全
     if (i < texts.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 700));
     }
   }
   

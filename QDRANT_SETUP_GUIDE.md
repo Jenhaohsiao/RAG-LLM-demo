@@ -14,11 +14,12 @@
 
 ## 概述
 
-本專案現在整合了真正的 RAG (Retrieval-Augmented Generation) 系統：
+本專案整合了真正的 RAG (Retrieval-Augmented Generation) 系統：
 
 - **向量資料庫**: Qdrant Cloud
-- **Embedding 模型**: Google Gemini text-embedding-004 (768 維度)
-- **LLM**: Google Gemini 2.0 Flash
+- **Embedding 模型**: Google Gemini gemini-embedding-001 (3072 維度)
+- **LLM**: Google Gemini gemini-2.5-flash
+- **語言支援**: 英文 (en)、繁體中文 (zh-TW)
 - **工作流程**: 文字 → 分塊 → Embedding → Qdrant → 檢索 → LLM 回答
 
 ---
@@ -400,8 +401,8 @@ RAG-LLM-demo/
 ## 成本估算
 
 ### Gemini API
-- **Embedding**: text-embedding-004 免費（有配額限制）
-- **LLM**: gemini-2.0-flash-exp 免費（有配額限制）
+- **Embedding**: gemini-embedding-001 免費（有配額限制）
+- **LLM**: gemini-2.5-flash 免費（有配額限制）
 
 ### Qdrant Cloud
 - **免費方案**: 1GB 儲存，約可存儲 100-200 本中等大小的書籍

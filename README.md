@@ -15,8 +15,9 @@
 ## ✨ Features
 
 - 🎯 **True RAG Architecture**: Qdrant Vector Database + Google Gemini LLM
-- 🧠 **Real-time Embedding & Retrieval**: Dynamic content search with 768-dim vectors
-- 📚 **Custom Knowledge Base**: Upload your own text files (.txt, .md)
+- 🧠 **Real-time Embedding & Retrieval**: Dynamic content search with 3072-dim vectors
+- 📚 **5 Pre-loaded Books**: Classic literature ready to explore
+- 🌐 **Bilingual Support**: English + Traditional Chinese
 - 🎭 **AI Personas**: Choose from 4 different AI characters (Librarian, Critic, Super Fan, Author)
 - 🎵 **Tone Control**: Adjust conversation style (Formal, Casual, Humorous, Mysterious)
 - 💬 **ChatGPT-style Interface**: Modern, responsive chat UI
@@ -61,8 +62,6 @@ npm run dev
 
 Visit `http://localhost:5173` to see the app in action! 🎉
 
-**📖 Detailed Setup Guide**: See [QUICKSTART_RAG.md](./QUICKSTART_RAG.md) for step-by-step instructions (15 minutes)
-
 ---
 
 ## 📦 Build & Deploy
@@ -88,9 +87,9 @@ Detailed deployment instructions: [DEPLOYMENT.md](./DEPLOYMENT.md)
 - **Frontend**: React 19 + TypeScript
 - **Build Tool**: Vite
 - **Styling**: TailwindCSS + Custom CSS Animations
-- **Vector DB**: Qdrant Cloud (768-dim embeddings)
-- **Embedding**: Google Gemini text-embedding-004
-- **LLM**: Google Gemini API (gemini-2.0-flash-exp)
+- **Vector DB**: Qdrant Cloud (3072-dim embeddings)
+- **Embedding**: Google Gemini gemini-embedding-001
+- **LLM**: Google Gemini gemini-2.5-flash
 - **Deployment**: Static Site Hosting (Vercel, Netlify, Azure)
 
 ---

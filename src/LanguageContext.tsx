@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Language, translations, Translations } from './translations';
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { Language, translations, Translations } from "./translations";
 
 interface LanguageContextType {
   language: Language;
@@ -7,21 +7,25 @@ interface LanguageContextType {
   t: Translations;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
 
-const STORAGE_KEY = 'rag-app-language';
+const STORAGE_KEY = "rag-app-language";
 
-export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [language, setLanguageState] = useState<Language>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored && (stored === 'en' || stored === 'zh-TW' || stored === 'zh-CN')) {
+      if (stored && (stored === "en" || stored === "zh-TW")) {
         return stored as Language;
       }
     } catch (error) {
-      console.error('Failed to load language from localStorage:', error);
+      console.error("Failed to load language from localStorage:", error);
     }
-    return 'en';
+    return "en";
   });
 
   const setLanguage = (lang: Language) => {
@@ -29,7 +33,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     try {
       localStorage.setItem(STORAGE_KEY, lang);
     } catch (error) {
-      console.error('Failed to save language to localStorage:', error);
+      console.error("Failed to save language to localStorage:", error);
     }
   };
 
@@ -45,7 +49,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 export const useTranslation = () => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useTranslation must be used within LanguageProvider');
+    throw new Error("useTranslation must be used within LanguageProvider");
   }
   return context;
 };

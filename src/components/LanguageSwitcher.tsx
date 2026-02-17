@@ -1,38 +1,32 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Language, languageNames } from '../translations';
-import { useTranslation } from '../LanguageContext';
+import React, { useState, useRef, useEffect } from "react";
+import { Language, languageNames } from "../translations";
+import { useTranslation } from "../LanguageContext";
 
 const LanguageSwitcher: React.FC = () => {
   const { language, setLanguage } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const languages: Language[] = ['en', 'zh-TW', 'zh-CN'];
+  const languages: Language[] = ["en", "zh-TW"];
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
     setIsOpen(false);
-  };
-
-  const getLanguageIcon = (lang: Language) => {
-    const icons = {
-      'en': '🇬🇧',
-      'zh-TW': '🇹🇼',
-      'zh-CN': '🇨🇳',
-    };
-    return icons[lang];
   };
 
   return (
@@ -42,10 +36,22 @@ const LanguageSwitcher: React.FC = () => {
         className="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
         title="Change Language"
       >
-        <span className="text-lg">{getLanguageIcon(language)}</span>
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+          />
+        </svg>
         <span className="font-medium">{languageNames[language]}</span>
         <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -60,20 +66,21 @@ const LanguageSwitcher: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50">
+        <div className="absolute top-full right-0 mt-1 min-w-[140px] bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50">
           {languages.map((lang) => (
             <button
               key={lang}
               onClick={() => handleLanguageChange(lang)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-slate-50 transition-colors ${
-                language === lang ? 'bg-indigo-50 text-indigo-600 font-medium' : 'text-slate-700'
+              className={`w-full flex items-center justify-between px-4 py-2 text-sm hover:bg-slate-50 transition-colors ${
+                language === lang
+                  ? "bg-indigo-50 text-indigo-600 font-medium"
+                  : "text-slate-700"
               }`}
             >
-              <span className="text-lg">{getLanguageIcon(lang)}</span>
               <span>{languageNames[lang]}</span>
               {language === lang && (
                 <svg
-                  className="w-4 h-4 ml-auto text-indigo-600"
+                  className="w-4 h-4 text-indigo-600"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >

@@ -1,4 +1,4 @@
-export type Language = 'en' | 'zh-TW' | 'zh-CN';
+export type Language = 'en' | 'zh-TW';
 
 export interface Translations {
   // Header & Navigation
@@ -130,53 +130,12 @@ const zhTW: Translations = {
   reloadApplication: '重新載入應用程式',
 };
 
-const zhCN: Translations = {
-  appTitle: 'RAG 智能说书',
-  aiAssistant: 'AI 助手',
-  ragBadge: 'RAG',
-  knowledgeBase: '知识库',
-  selectSourceAndConfig: '选择来源并配置 AI',
-  availableSources: '可用来源',
-  synopsis: '简介',
-  aiConfiguration: 'AI 配置',
-  role: '角色',
-  tone: '语调',
-  vectorDbConnected: '向量数据库已连接',
-  vectorDbChecking: '检查中...',
-  connectionError: '连接错误',
-  librarian: '图书管理员',
-  critic: '文学评论家',
-  superFan: '超级粉丝',
-  theAuthor: '原作者',
-  formal: '正式',
-  casual: '轻松',
-  humorous: '幽默',
-  mysterious: '神秘',
-  messages: '条消息',
-  exportChat: '导出对话',
-  startConversation: '开始对话',
-  askQuestions: '询问关于',
-  thinking: '思考中...',
-  typeMessage: '询问故事相关问题... (Shift+Enter 换行)',
-  sendMessage: '发送消息 (Enter)',
-  aiDisclaimer: 'AI 回应由 Gemini 提供支持。可能包含不准确信息。',
-  switchKnowledgeBase: '切换知识库？',
-  switchWarning: '切换到「{title}」将清空当前的对话。是否继续？',
-  switch: '切换',
-  cancel: '取消',
-  confirm: '确认',
-  somethingWrong: '发生错误',
-  reloadApplication: '重新加载应用程序',
-};
-
 export const translations: Record<Language, Translations> = {
   'en': en,
   'zh-TW': zhTW,
-  'zh-CN': zhCN,
 };
 
 export const languageNames: Record<Language, string> = {
   'en': 'English',
   'zh-TW': '繁體中文',
-  'zh-CN': '简体中文',
 };

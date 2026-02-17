@@ -1,7 +1,6 @@
 export interface LocalizedContent {
   en: string;
   'zh-TW': string;
-  'zh-CN': string;
 }
 
 export interface Book {

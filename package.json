@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.39.0",
+    "@google/generative-ai": "^0.24.1",
     "@qdrant/qdrant-js": "^1.16.2",
     "dotenv": "^17.2.3",
     "react": "^19.2.4",

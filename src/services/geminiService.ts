@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Book, Message, AIPersona, AITone } from '../types';
 import { Language } from '../translations';
 import { generateEmbedding } from './embeddingService';
@@ -22,7 +22,7 @@ const getClient = () => {
   }
   
   try {
-    return new GoogleGenAI({ apiKey });
+    return new GoogleGenerativeAI(apiKey);
   } catch (error) {
     console.error("❌ Failed to initialize Gemini client:", error);
     throw new Error("Failed to initialize AI service");
@@ -30,7 +30,39 @@ const getClient = () => {
 };
 
 /**
- * 從 Qdrant 檢索相關內容 (with retry and language support)
+ * 將非英文查詢翻譯成英文以提高向量搜索準確度
+ */
+const translateQueryToEnglish = async (query: string, language: Language): Promise<string> => {
+  // 如果已經是英文，直接返回
+  if (language === 'en') {
+    return query;
+  }
+  
+  try {
+    const genAI = getClient();
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 256,
+      },
+    });
+    
+    const result = await model.generateContent(
+      `Translate the following query to English. Only output the translation, nothing else.\n\nQuery: ${query}`
+    );
+    
+    const translatedQuery = result.response.text().trim();
+    console.log(`🔄 Query translated: "${query}" → "${translatedQuery}"`);
+    return translatedQuery;
+  } catch (error) {
+    console.error("❌ Translation failed, using original query:", error);
+    return query;
+  }
+};
+
+/**
+ * 從 Qdrant 檢索相關內容 (with query translation for better accuracy)
  */
 const retrieveRelevantContext = async (
   query: string,
@@ -40,21 +72,22 @@ const retrieveRelevantContext = async (
   retries: number = MAX_RETRIES
 ): Promise<string> => {
   try {
-    // 1. 生成查詢的 embedding
-    const queryEmbedding = await generateEmbedding(query);
+    // 1. 將查詢翻譯成英文（因為書籍內容是英文）
+    const englishQuery = await translateQueryToEnglish(query, language);
     
-    // 2. 從 Qdrant 搜索相似向量（使用指定語言過濾）
-    const results = await searchSimilarVectors(queryEmbedding, bookId, language, topK);
+    // 2. 生成英文查詢的 embedding
+    const queryEmbedding = await generateEmbedding(englishQuery);
     
-    // 3. 組合檢索到的文本
+    // 3. 從 Qdrant 搜索相似向量（使用 en 語言版本，因為內容是英文）
+    const results = await searchSimilarVectors(queryEmbedding, bookId, 'en', topK);
+    
+    // 4. 組合檢索到的文本
     if (results.length === 0) {
       return "No relevant content found in the database.";
     }
     
     const context = results
-      .map((result, index) => {
-        return `[Context ${index + 1}] (Relevance: ${(result.score * 100).toFixed(1)}%)\n${result.payload.text}`;
-      })
+      .map((result) => result.payload.text)
       .join('\n\n---\n\n');
     
     console.log(`✅ Retrieved ${results.length} relevant chunks from Qdrant`);
@@ -85,7 +118,7 @@ export const generateRAGResponse = async (
   retries: number = MAX_RETRIES
 ): Promise<string> => {
   try {
-    const ai = getClient();
+    const genAI = getClient();
     
     // ✨ 真正的 RAG: 從 Qdrant 檢索相關內容（使用當前語言）
     const retrievedContext = await retrieveRelevantContext(
@@ -98,8 +131,7 @@ export const generateRAGResponse = async (
     // 語言特定的系統指令
     const languageInstructions = {
       'en': 'Respond in English.',
-      'zh-TW': 'Respond in Traditional Chinese (繁體中文).',
-      'zh-CN': 'Respond in Simplified Chinese (简体中文).'
+      'zh-TW': 'Respond in Traditional Chinese (繁體中文). At the END of your response, add a note in a new line: "※ 此回答基於英文原文內容進行翻譯及理解。"'
     };
     
     // Construct the RAG System Instruction with persona and tone guidance
@@ -134,37 +166,36 @@ export const generateRAGResponse = async (
       2. The context is dynamically retrieved based on the user's question for maximum relevance
       3. If the retrieved context doesn't contain enough information, acknowledge this and provide what you can
       4. Maintain consistency with your assigned role and tone
-      5. Keep responses concise yet informative (2-4 paragraphs)
-      6. Cite specific details from the retrieved context when relevant
+      5. **IMPORTANT: Keep your response to approximately 80 words (or ~80 Chinese characters). Be concise and direct.**
+      6. Do NOT mention or cite context sources, numbers, or references - present information naturally
       7. ALWAYS respond in the language specified above
       
       🎯 GOAL: Help users deeply understand and engage with "${selectedBook.title[language]}" using real-time retrieved content
     `;
 
-    const model = 'gemini-2.5-flash';
-    
-    // Create chat session with history
-    const chat = ai.chats.create({
-      model: model,
-      config: {
-        systemInstruction: systemInstruction,
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-2.5-flash",
+      systemInstruction: systemInstruction,
+      generationConfig: {
         temperature: 0.7,
         topP: 0.95,
         topK: 40,
-        maxOutputTokens: 1024,
+        maxOutputTokens: 4096,
       },
+    });
+    
+    // Create chat with history
+    const chat = model.startChat({
       history: history.map(msg => ({
-        role: msg.role,
-        parts: [{ text: msg.text }]
-      }))
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }],
+      })),
     });
 
     // Send message and get response
-    const result = await chat.sendMessage({
-      message: currentMessage
-    });
-
-    const responseText = result.text;
+    const result = await chat.sendMessage(currentMessage);
+    const response = await result.response;
+    const responseText = response.text();
     
     if (!responseText || responseText.trim().length === 0) {
       throw new Error("Empty response from AI");
