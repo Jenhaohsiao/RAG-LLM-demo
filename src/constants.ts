@@ -34,7 +34,7 @@ export const BOOKS: Book[] = [
       'zh-TW': '何塞·勞爾·卡帕布蘭卡'
     },
     coverColor: 'bg-violet-600',
-    coverImage: '/Books/bookcovers/CHESS FUNDAMENTALS.png',
+    coverImage: '/Books/bookCovers/CHESS FUNDAMENTALS.png',
     summary: {
       en: 'Written by the legendary Cuban World Chess Champion José Raúl Capablanca, this timeless masterpiece teaches chess through crystal-clear explanations and practical examples. Published in 1921, it covers essential opening principles, powerful middlegame strategies, and precise endgame techniques. Capablanca, known for his intuitive and elegant playing style, breaks down complex positions into understandable concepts. The book emphasizes the importance of pawn structure, piece coordination, and positional understanding over memorization. Perfect for beginners and intermediate players seeking to build a solid foundation.',
       'zh-TW': '由傳奇古巴世界西洋棋冠軍何塞·勞爾·卡帕布蘭卡所著，這部不朽的經典名作透過清晰易懂的解釋和實用範例教授西洋棋。本書於1921年出版，涵蓋基本開局原則、強大的中盤戰術和精準的殘局技巧。卡帕布蘭卡以其直覺敏銳且優雅的棋風聞名，將複雜的棋局分解成易於理解的概念。書中強調兵型結構、棋子協調和位置理解的重要性，而非死記硬背。非常適合希望建立扎實基礎的初學者和中級棋手。'
@@ -56,7 +56,7 @@ export const BOOKS: Book[] = [
       'zh-TW': '珍·奧斯汀'
     },
     coverColor: 'bg-rose-500',
-    coverImage: '/Books/bookcovers/Pride and Prejudice.png',
+    coverImage: '/Books/bookCovers/Pride and Prejudice.png',
     summary: {
       en: 'Jane Austen\'s most beloved novel follows the spirited Elizabeth Bennet and her complex relationship with the proud Mr. Darcy. Set in Regency-era England, this witty romantic comedy explores themes of love, reputation, class, and personal growth. When the wealthy Mr. Bingley arrives in the neighborhood with his friend Mr. Darcy, the Bennet family sees opportunities for advantageous marriages. But misunderstandings, wounded pride, and initial prejudices must be overcome before true love can prevail. With sharp social commentary and unforgettable characters, this 1813 masterpiece remains a timeless exploration of human nature.',
       'zh-TW': '珍·奧斯汀最受喜愛的小說，講述機智的伊麗莎白·班奈特與傲慢的達西先生之間複雜的愛情故事。故事背景設定在英國攝政時期，這部詼諧的浪漫喜劇探討愛情、名譽、階級和個人成長的主題。當富有的賓利先生和朋友達西先生來到鄰近地區時，班奈特家看到了有利婚姻的機會。然而，誤解、受傷的自尊和最初的偏見必須被克服，真愛才能開花結果。這部1813年的傑作以犀利的社會評論和令人難忘的角色，至今仍是對人性的永恆探索。'
@@ -78,7 +78,7 @@ export const BOOKS: Book[] = [
       'zh-TW': 'E. G. 湯姆森'
     },
     coverColor: 'bg-amber-500',
-    coverImage: '/Books/bookcovers/SOAP-MAKING MANUAL.png',
+    coverImage: '/Books/bookCovers/SOAP-MAKING MANUAL.png',
     summary: {
       en: 'This comprehensive technical guide by E.G. Thomssen covers the complete science and art of soap manufacturing. From understanding the chemistry of saponification to practical production methods, this manual provides detailed instructions for creating various types of soaps. Learn about different fats and oils, alkali solutions, temperature control, and curing processes. The book includes formulas for toilet soaps, laundry soaps, and specialty products. Whether you\'re a hobbyist or aspiring professional, this classic text offers invaluable knowledge about one of humanity\'s oldest crafts, combining traditional techniques with scientific principles.',
       'zh-TW': 'E.G. 湯姆森撰寫的這本全面技術指南涵蓋了製皂的完整科學與藝術。從理解皂化反應的化學原理到實用的生產方法，本手冊提供了製作各種肥皂的詳細說明。您將學習不同的油脂、鹼液、溫度控制和固化過程。書中包含香皂、洗衣皂和特殊產品的配方。無論您是業餘愛好者還是有志成為專業人士，這部經典著作都提供了關於人類最古老工藝之一的寶貴知識，將傳統技術與科學原理完美結合。'
